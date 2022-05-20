@@ -6,12 +6,16 @@ const listKinds = async (req, res, next) => {
   try {
     debug(chalk.green("Received request to get kinds list"));
     const kinds = await Kind.find();
-    res.status(200).json({ kinds });
+    if (!kinds) {
+      debug(chalk.red("Received a bad request to get kinds list"));
+      const cantFindError = new Error();
+      cantFindError.code = 400;
+      cantFindError.errorMessage = "Bad request";
+      next(cantFindError);
+    } else {
+      res.status(200).json({ kinds });
+    }
   } catch (error) {
-    debug(chalk.red("Received a bad request to get kinds list"));
-    error.code = 400;
-    error.errorMessage = "Bad request";
-
     next(error);
   }
 };
