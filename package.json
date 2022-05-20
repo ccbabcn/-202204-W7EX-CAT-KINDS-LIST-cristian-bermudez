@@ -7,7 +7,8 @@
     "start": "node src",
     "start-dev": "nodemon src -q",
     "test": "jest --watchAll",
-    "test-coverage": "jest --watchAll --coverage"
+    "test-coverage": "npm run test -- --coverage --watchAll=false",
+    "test-coverage-local": "jest --watchAll --coverage"
   },
   "keywords": [],
   "author": "",
